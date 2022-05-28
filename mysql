@@ -1,0 +1,1 @@
+mysql -u root -D noq -h 34.101.228.187 -p

@@ -12,7 +12,6 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "no-console": "off",
-        "no-bitwise": "off"
+        "no-console": "off"
     }
 }

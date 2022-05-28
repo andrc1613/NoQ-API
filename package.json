@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "devstart": "nodemon .",
-    "migrate": "sequelize db:migrate"
+    "migrate": "sequelize db:migrate",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",

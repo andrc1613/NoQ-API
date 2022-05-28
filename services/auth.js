@@ -1,12 +1,17 @@
-const validator = require('fastest-validator');
+const Validator = require('fastest-validator');
 const bcrypt = require('bcrypt');
-const { User } = require('../models');
-const user = require('../models/user');
-const { generateToken } = require('./jwt');
+const jwt = require('jsonwebtoken');
 
-const v = new validator();
+const secret = process.env.JWT_SECRET || 'noq-capstone';
+const expiresIn = process.env.JWT_EXPIRE || '1h';
+const { User } = require('../models');
+
+const generateToken = (payload) => (jwt.sign(payload, secret, { expiresIn }));
+
+const v = new Validator();
 
 const registerHandler = async (req, res) => {
+  const resp = {};
   const schema = {
     name: 'string',
     email: 'email',
@@ -25,9 +30,7 @@ const registerHandler = async (req, res) => {
     },
   });
   if (userWithEmail) {
-    const resp = {
-      message: 'User is already registered.',
-    };
+    resp.message = 'User is already registered.';
     return res
       .status(400)
       .json(resp);
@@ -42,17 +45,20 @@ const registerHandler = async (req, res) => {
     password: hash,
   };
 
-  const data = await User.create(insert);
+  await User.create(insert);
+
+  resp.message = 'User created.';
   res
     .status(201)
-    .json(data);
-}
+    .json(resp);
+};
 
 const loginHandler = async (req, res) => {
+  const resp = {};
   const schema = {
     email: 'email',
-    password: 'string'
-  }
+    password: 'string',
+  };
   const validate = v.validate(req.body, schema);
   if (validate.length) {
     return res
@@ -62,26 +68,22 @@ const loginHandler = async (req, res) => {
 
   const userWithEmail = await User.findOne({
     where: {
-      email: req.body.email
-    }
-  })
+      email: req.body.email,
+    },
+  });
   if (!userWithEmail) {
-    const resp = {
-      message: "Username or password is incorrect."
-    }
+    resp.message = 'Username or password is incorrect.';
     return res
       .status(400)
-      .json(resp)
+      .json(resp);
   }
 
   const check = await bcrypt.compare(req.body.password, userWithEmail.password);
   if (!check) {
-    const resp = {
-      message: "Username or password is incorrect."
-    }
+    resp.message = 'Username or password is incorrect.';
     return res
       .status(400)
-      .json()
+      .json(resp);
   }
 
   const token = generateToken({
@@ -90,11 +92,17 @@ const loginHandler = async (req, res) => {
     name: userWithEmail.name,
   });
 
+  resp.message = 'Login successful.';
+  resp.loginResult = {
+    id: userWithEmail.id,
+    name: userWithEmail.name,
+    email: userWithEmail.email,
+    token,
+  };
+
   res
     .status(200)
-    .json({
-      message: token
-    })
-}
+    .json(resp);
+};
 
-module.exports = { registerHandler, loginHandler }
+module.exports = { registerHandler, loginHandler };
