@@ -8,12 +8,12 @@ const { User } = require('../models');
 
 const success = require('../responses/success');
 const fail = require('../responses/fail');
-const { incorrectLogin } = require('../responses/fail');
 
 const generateToken = (payload) => (jwt.sign(payload, secret, { expiresIn }));
 
 const v = new Validator();
 
+// Register
 const registerHandler = async (req, res) => {
   const schema = {
     name: 'string',
@@ -45,6 +45,7 @@ const registerHandler = async (req, res) => {
   res.status(201).json(success.userCreated);
 };
 
+// Login
 const loginHandler = async (req, res) => {
   const schema = {
     email: 'email',

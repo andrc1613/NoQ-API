@@ -1,5 +1,5 @@
 module.exports = {
   userCreated: {
-    message: "User created."
-  }
-}
+    message: 'User created.',
+  },
+};

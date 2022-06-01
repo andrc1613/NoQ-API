@@ -6,7 +6,7 @@ const response = require('../responses/status');
 const secret = process.env.JWT_SECRET || 'noq-capstone';
 
 const jwtAuthenticate = (req, res, next) => {
-  authString = req.headers['authorization'].split(' ');
+  const authString = req.headers.authorization.split(' ');
   const jwtAuth = authString[0];
   const jwtToken = authString[1];
 
@@ -17,6 +17,6 @@ const jwtAuthenticate = (req, res, next) => {
     req.decoded = decoded;
     next();
   });
-}
+};
 
 module.exports = jwtAuthenticate;

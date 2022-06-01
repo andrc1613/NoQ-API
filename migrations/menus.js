@@ -20,6 +20,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DOUBLE,
       },
+      isAvailable: {
+        allowNull: false,
+        defaultValue: true,
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

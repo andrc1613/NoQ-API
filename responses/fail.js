@@ -1,8 +1,8 @@
 module.exports = {
   userAlreadyRegistered: {
-    message: "User is already registered."
+    message: 'User is already registered.',
   },
   incorrectLogin: {
-    message: "Incorrect username or password."
+    message: 'Incorrect username or password.',
   },
-}
+};
