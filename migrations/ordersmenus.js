@@ -1,23 +1,28 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Orders', {
-      id: {
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-        type: Sequelize.INTEGER,
-      },
-      userId: {
+    await queryInterface.createTable('OrdersMenus', {
+      orderId: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      totalPrice: {
+      menuId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      menuPrice: {
         allowNull: false,
         type: Sequelize.DOUBLE,
       },
-      status: {
+      amount: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+      },
+      subtotal: {
+        allowNull: false,
+        type: Sequelize.DOUBLE,
+      },
+      notes: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +36,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Orders');
+    await queryInterface.dropTable('OrdersMenus');
   },
 };

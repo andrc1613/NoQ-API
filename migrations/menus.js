@@ -20,17 +20,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DOUBLE,
       },
-      isAvailable: {
-        allowNull: false,
-        defaultValue: true,
-        type: Sequelize.BOOLEAN,
-      },
       createdAt: {
         allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE,
       },
     });

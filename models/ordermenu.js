@@ -1,23 +1,27 @@
 module.exports = (sequelize, DataTypes) => {
-  const Order = sequelize.define('Order', {
-    id: {
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-    },
-    userId: {
+  const OrderMenu = sequelize.define('OrderMenu', {
+    orderId: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    totalPrice: {
+    menuId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    menuPrice: {
       allowNull: false,
       type: DataTypes.DOUBLE,
     },
-    status: {
+    amount: {
       allowNull: false,
-      defaultValue: 'PENDING',
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+    },
+    subtotal: {
+      allowNull: false,
+      type: DataTypes.DOUBLE,
+    },
+    notes: {
+      type: DataTypes.TEXT,
     },
     createdAt: {
       allowNull: false,
@@ -28,8 +32,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {
-    tableName: 'Orders'
+    tableName: 'OrdersMenus'
   });
+  
+  OrderMenu.removeAttribute('id');
 
-  return Order;
+  return OrderMenu;
 };

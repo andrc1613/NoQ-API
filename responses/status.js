@@ -5,4 +5,7 @@ module.exports = {
   403: {
     message: 'Forbidden attempt.',
   },
+  500: {
+    message: 'Internal server error.',
+  },
 };

@@ -7,7 +7,7 @@ const router = express.Router();
  * USER FUNCTIONALITY
  */
 // Post an order
-router.post('/', addOrderHandler);
+router.post('/new', addOrderHandler);
 
 /**
  * ADMIN FUNCTIONALITY
