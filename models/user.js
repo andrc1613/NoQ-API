@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {
-    tableName: 'Users'
+    tableName: 'Users',
   });
 
   return User;

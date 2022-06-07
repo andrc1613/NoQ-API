@@ -1,62 +1,59 @@
-const { Menu, Order, OrderMenu, sequelize } = require('../models');
-const status = require("../responses/status");
+const {
+  Menu, Order, OrderMenu, sequelize,
+} = require('../models');
+const status = require('../responses/status');
 
 // Post an order (user)
-const addOrderHandler = async (req, res) => {  
-  
-  
-  const userId = req.decoded.userId;
-  const tableId = req.body.tableId;
-  const orderItems = req.body.orderItems;
+const addOrderHandler = async (req, res) => {
+  const { userId } = req.decoded;
+  const { tableId } = req.body;
+  const { orderItems } = req.body;
 
   const itemIds = orderItems.map(({ menuId: id }) => (id));
 
   const menusData = await Menu.findAll({
     where: {
       id: itemIds,
-    }
+    },
   });
 
   let totalPrice = 0;
-  orderItems.forEach(item => {
+  orderItems.forEach((item) => {
     const menuData = menusData.find((data) => (data.id === item.menuId));
-    totalPrice = totalPrice + menuData.price * item.amount;
+    totalPrice += menuData.price * item.amount;
   });
 
+  const t = await sequelize.transaction();
   try {
-    let t = await sequelize.transaction();
-    
-    let orderId;
     const order = await Order.create({
-      userId: userId,
-      tableId: tableId,
-      totalPrice: totalPrice,
-    }, {transaction: t});
+      userId,
+      tableId,
+      totalPrice,
+    }, { transaction: t });
 
-    orderId = order.id;
+    const orderId = order.id;
 
-    
-    for (item of orderItems) {
+    for (const item of orderItems) {
       const menuData = menusData.find((data) => (data.id === item.menuId));
       await OrderMenu.create({
-        orderId: orderId,
+        orderId,
         menuId: item.menuId,
         menuPrice: menuData.price,
         amount: item.amount,
         subtotal: item.amount * menuData.price,
-      }, {transaction: t});
+      }, { transaction: t });
     }
 
     await t.commit();
 
     const resp = {
-      userId: userId,
-      orderId: orderId,
-      tableId: tableId,
-      totalPrice: totalPrice,
+      userId,
+      orderId,
+      tableId,
+      totalPrice,
       status: 'PENDING',
-    }
-  
+    };
+
     res.status(201).json(resp);
   } catch (err) {
     await t.rollback();

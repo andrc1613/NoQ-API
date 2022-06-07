@@ -29,9 +29,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   }, {
-    tableName: 'OrdersMenus'
+    tableName: 'OrdersMenus',
   });
-  
+
   OrderMenu.removeAttribute('id');
 
   return OrderMenu;
