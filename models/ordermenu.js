@@ -2,11 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const OrderMenu = sequelize.define('OrderMenu', {
     orderId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     menuId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     menuPrice: {
       allowNull: false,
@@ -19,9 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     subtotal: {
       allowNull: false,
       type: DataTypes.DOUBLE,
-    },
-    notes: {
-      type: DataTypes.TEXT,
     },
     createdAt: {
       allowNull: false,

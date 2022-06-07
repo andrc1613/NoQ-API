@@ -1,13 +1,15 @@
+'use strict';
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up (queryInterface, Sequelize) {
     await queryInterface.createTable('OrdersMenus', {
       orderId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
       },
       menuId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
       },
       menuPrice: {
         allowNull: false,
@@ -21,21 +23,20 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DOUBLE,
       },
-      notes: {
-        type: Sequelize.TEXT,
-      },
       createdAt: {
         allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE,
       },
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  async down (queryInterface, Sequelize) {
     await queryInterface.dropTable('OrdersMenus');
-  },
+  }
 };

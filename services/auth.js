@@ -65,7 +65,7 @@ const loginHandler = async (req, res) => {
   if (!check) return res.status(400).json(fail.incorrectLogin);
 
   const token = generateToken({
-    id: userWithEmail.id,
+    userId: userWithEmail.id,
     email: userWithEmail.email,
     name: userWithEmail.name,
     isAdmin: userWithEmail.isAdmin,
@@ -74,7 +74,7 @@ const loginHandler = async (req, res) => {
   const resp = {};
   resp.message = 'Login successful.';
   resp.loginResult = {
-    id: userWithEmail.id,
+    userId: userWithEmail.id,
     name: userWithEmail.name,
     email: userWithEmail.email,
     isAdmin: userWithEmail.isAdmin,

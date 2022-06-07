@@ -1,11 +1,12 @@
+'use strict';
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up (queryInterface, Sequelize) {
     await queryInterface.createTable('Menus', {
       id: {
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
       },
       name: {
         allowNull: false,
@@ -20,6 +21,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DOUBLE,
       },
+      photoUrl: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -33,7 +38,7 @@ module.exports = {
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  async down (queryInterface, Sequelize) {
     await queryInterface.dropTable('Menus');
-  },
+  }
 };

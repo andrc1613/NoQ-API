@@ -1,16 +1,16 @@
 const express = require('express');
-const { getAllAvailableMenusHandler, addMenuHandler } = require('../services/menus');
+const { getAllMenusHandler, addMenuHandler } = require('../services/menus');
 
 const router = express.Router();
 
 /**
  * USER FUNCTIONALITY
  */
-// Get all available menus
-router.get('/', getAllAvailableMenusHandler);
+// Get all menus
+router.get('/', getAllMenusHandler);
 
 /**
- * ADMIN FUNCTIONALITY
+ * ROOT FUNCTIONALITY
  */
 // Add a menu
 router.post('/add', addMenuHandler);

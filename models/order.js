@@ -2,13 +2,17 @@ module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define('Order', {
     id: {
       allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
+    },
+    tableId: {
+      allowNull: false,
+      type: DataTypes.STRING,
     },
     totalPrice: {
       allowNull: false,

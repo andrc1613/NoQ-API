@@ -2,9 +2,9 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id: {
       allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     name: {
       allowNull: false,
@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     isAdmin: {
-      defaultValue: false,
       allowNull: false,
+      defaultValue: false,
       type: DataTypes.BOOLEAN,
     },
     createdAt: {

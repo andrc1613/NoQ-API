@@ -2,9 +2,9 @@ module.exports = (sequelize, DataTypes) => {
   const Menu = sequelize.define('Menu', {
     id: {
       allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     name: {
       allowNull: false,
@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       allowNull: false,
       type: DataTypes.DOUBLE,
+    },
+    photoUrl: {
+      allowNull: false,
+      type: DataTypes.STRING,
     },
     createdAt: {
       allowNull: false,

@@ -1,10 +1,10 @@
 const { Menu } = require('../models');
 
-// Get all available menus
-const getAllAvailableMenusHandler = async (req, res) => {
+// Get all menus (user)
+const getAllMenusHandler = async (req, res) => {
   const menus = await Menu.findAndCountAll();
 
-  const datas = (menus.rows).map(({id, name, description, price}) => ({id, name, description, price}));
+  const datas = (menus.rows).map(({id: menuId, name, description, price, photoUrl}) => ({menuId, name, description, price, photoUrl}));
 
   const message = {
     total: menus.count,
@@ -13,9 +13,9 @@ const getAllAvailableMenusHandler = async (req, res) => {
   res.status(200).json(message);
 };
 
-// Add a menu
+// Add a menu (root)
 const addMenuHandler = (req, res) => {
 
 };
 
-module.exports = { getAllAvailableMenusHandler, addMenuHandler };
+module.exports = { getAllMenusHandler, addMenuHandler };
