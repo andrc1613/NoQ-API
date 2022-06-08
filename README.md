@@ -17,5 +17,5 @@ Do ```npm run devstart``` to start the server
 - ```./mysql```         : connect to mysql database from the terminal (linux only)
 
 ## To do lists
-[] Change isAdmin (0, 1) to status (USER, ADMIN, ROOT) (Users)
-[] Add menuName column (OrdersMenus)
+[ ] Change isAdmin (0, 1) to status (USER, ADMIN, ROOT) (Users)
+[ ] Add menuName column (OrdersMenus)
