@@ -1,7 +1,14 @@
 const {
   Menu, Order, OrderMenu, sequelize,
 } = require('../models');
+
+const Validator = require('fastest-validator')
+
+const fail = require('../responses/fail');
 const status = require('../responses/status');
+const success = require('../responses/success');
+
+const v = new Validator();
 
 // Post an order (user)
 const addOrderHandler = async (req, res) => {
@@ -62,13 +69,80 @@ const addOrderHandler = async (req, res) => {
 };
 
 // Get all orders (admin)
-const getAllOrdersHandler = (req, res) => {
+const getAllOrdersHandler = async (req, res) => {
+  const orders = await Order.findAndCountAll();
+  const datas = (orders.rows).map(({ id: orderId, userId, tableId, totalPrice, status }) => ({ orderId, userId, tableId, totalPrice, status }));
 
+  const message = {
+    total: orders.count,
+    data: datas,
+  }
+  res.status(200).json(message);
 };
 
 // Get order details (admin)
-const getOrderDetailHandler = (req, res) => {
+const getOrderDetailHandler = async (req, res) => {
+  const orderId = req.params.id;
+  
+  const order = await Order.findOne({
+    where: {
+      id: orderId,
+    }
+  })
 
+  if (!order) return res.status(400).json(fail.notAValidOrderId);
+  
+  const orderDetail = await OrderMenu.findAll({
+    where: {
+      orderId: orderId,
+    }
+  });
+
+  const orderItems = orderDetail.map(({ menuId, menuPrice, amount, subtotal }) => ({ menuId, menuPrice, amount, subtotal }));
+
+  const resp = {
+    orderId: orderId,
+    userId: order.userId,
+    tableId: order.tableId,
+    totalPrice: order.totalPrice,
+    status: order.status,
+    orderItems: orderItems,
+  }
+
+  res.status(200).json(resp);
 };
 
-module.exports = { addOrderHandler, getAllOrdersHandler, getOrderDetailHandler };
+// Update order status (admin)
+const updateOrderStatusHandler = async (req, res) => {
+  const schema = {
+    status: {
+      type: 'string',
+      enum: ['CANCELED', 'PENDING', 'DONE'],
+    }
+  }
+
+  const validate = v.validate(req.body, schema);
+
+  if (validate.length) return res.status(400).json(validate);
+  
+  const orderId = req.params.id;
+  const order = await Order.findOne({
+    where: {
+      id: orderId,
+    }
+  })
+
+  if (!order) return res.status(400).json(fail.notAValidOrderId);
+
+  await Order.update({
+    status: req.body.status
+  }, {
+    where: {
+      id: orderId
+    }
+  });
+
+  res.status(200).json(success.statusUpdated)
+};
+
+module.exports = { addOrderHandler, getAllOrdersHandler, getOrderDetailHandler, updateOrderStatusHandler };

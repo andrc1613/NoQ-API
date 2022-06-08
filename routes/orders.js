@@ -1,5 +1,6 @@
 const express = require('express');
-const { addOrderHandler, getAllOrdersHandler, getOrderDetailHandler } = require('../services/orders');
+const jwtAuthenticate = require('../middleware/jwt');
+const { addOrderHandler, getAllOrdersHandler, getOrderDetailHandler, updateOrderStatusHandler } = require('../services/orders');
 
 const router = express.Router();
 
@@ -7,15 +8,18 @@ const router = express.Router();
  * USER FUNCTIONALITY
  */
 // Post an order
-router.post('/new', addOrderHandler);
+router.post('/new', jwtAuthenticate(false), addOrderHandler);
 
 /**
  * ADMIN FUNCTIONALITY
  */
 // Get all orders
-router.get('/', getAllOrdersHandler);
+router.get('/',jwtAuthenticate(true) , getAllOrdersHandler);
 
 // Get order details
-router.get('/:id', getOrderDetailHandler);
+router.get('/:id', jwtAuthenticate(true), getOrderDetailHandler);
+
+// Update order status
+router.patch('/:id', jwtAuthenticate(true), updateOrderStatusHandler);
 
 module.exports = router;

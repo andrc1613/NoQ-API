@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/auth', authRouter);
-app.use('/menus', jwtAuthenticate, menusRouter);
-app.use('/orders', jwtAuthenticate, ordersRouter);
+app.use('/menus', menusRouter);
+app.use('/orders', ordersRouter);
 
 app.get('/', jwtAuthenticate, (req, res) => {
   res.send(req.decoded);

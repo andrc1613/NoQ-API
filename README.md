@@ -15,3 +15,7 @@ Do ```npm run devstart``` to start the server
 - ```npm run migrate``` : migrate database
 - ```npm run lint```    : check eslint
 - ```./mysql```         : connect to mysql database from the terminal (linux only)
+
+## To do lists
+[] Change isAdmin (0, 1) to status (USER, ADMIN, ROOT) (Users)
+[] Add menuName column (OrdersMenus)

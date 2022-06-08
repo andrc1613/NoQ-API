@@ -5,4 +5,7 @@ module.exports = {
   incorrectLogin: {
     message: 'Incorrect username or password.',
   },
+  notAValidOrderId: {
+    message: 'Not a valid order ID.',
+  }
 };
