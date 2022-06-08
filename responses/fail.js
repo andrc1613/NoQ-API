@@ -7,5 +7,5 @@ module.exports = {
   },
   notAValidOrderId: {
     message: 'Not a valid order ID.',
-  }
+  },
 };

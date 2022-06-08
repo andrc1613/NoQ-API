@@ -3,6 +3,6 @@ module.exports = {
     message: 'User created.',
   },
   statusUpdated: {
-    message: 'Status updated.'
-  }
+    message: 'Status updated.',
+  },
 };

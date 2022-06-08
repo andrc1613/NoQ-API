@@ -19,7 +19,7 @@ const getAllMenusHandler = async (req, res) => {
 
 // Add a menu (root)
 const addMenuHandler = (req, res) => {
-  
+
 };
 
 module.exports = { getAllMenusHandler, addMenuHandler };
