@@ -32,6 +32,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.DATE,
     },
+    isAdmin: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+    }
   }, {
     tableName: 'Users',
   });
