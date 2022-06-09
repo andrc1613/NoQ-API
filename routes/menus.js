@@ -5,15 +5,15 @@ const { getAllMenusHandler, addMenuHandler } = require('../services/menus');
 const router = express.Router();
 
 /**
- * USER FUNCTIONALITY
+ * CUSTOMER FUNCTIONALITY
  */
 // Get all menus
-router.get('/', jwtAuthenticate(false), getAllMenusHandler);
+router.get('/', jwtAuthenticate('CUSTOMER'), getAllMenusHandler);
 
 /**
- * ROOT FUNCTIONALITY
+ * ADMIN FUNCTIONALITY
  */
 // Add a menu
-router.post('/add', jwtAuthenticate(true), addMenuHandler);
+router.post('/add', jwtAuthenticate('ADMIN'), addMenuHandler);
 
 module.exports = router;

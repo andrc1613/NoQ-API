@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.UUID,
     },
+    menuName: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
     menuPrice: {
       allowNull: false,
       type: DataTypes.DOUBLE,

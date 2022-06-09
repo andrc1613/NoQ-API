@@ -4,16 +4,32 @@ const {
 } = require('../models');
 
 const fail = require('../responses/fail');
-const status = require('../responses/status');
+const statusCode = require('../responses/status');
 const success = require('../responses/success');
 
 const v = new Validator();
 
-// Post an order (user)
+// Post an order (customer)
 const addOrderHandler = async (req, res) => {
+  const schema = {
+    tableId: 'string',
+    orderItems: {
+      type: 'array',
+      items: {
+        type: 'object',
+        props: {
+          menuId: 'string',
+          amount: 'number',
+        },
+      },
+    },
+  };
+
+  const validate = v.validate(req.body, schema);
+  if (validate.length) return res.status(400).json(validate);
+
   const { userId } = req.decoded;
-  const { tableId } = req.body;
-  const { orderItems } = req.body;
+  const { tableId, orderItems } = req.body;
 
   const itemIds = orderItems.map(({ menuId: id }) => (id));
 
@@ -44,6 +60,7 @@ const addOrderHandler = async (req, res) => {
       await OrderMenu.create({
         orderId,
         menuId: item.menuId,
+        menuName: menuData.name,
         menuPrice: menuData.price,
         amount: item.amount,
         subtotal: item.amount * menuData.price,
@@ -63,11 +80,11 @@ const addOrderHandler = async (req, res) => {
     res.status(201).json(resp);
   } catch (err) {
     await t.rollback();
-    return res.status(500).json(status[500]);
+    return res.status(500).json(statusCode[500]);
   }
 };
 
-// Get all orders (admin)
+// Get all orders (waiter)
 const getAllOrdersHandler = async (req, res) => {
   const orders = await Order.findAndCountAll();
   const datas = (orders.rows).map(({
@@ -83,7 +100,7 @@ const getAllOrdersHandler = async (req, res) => {
   res.status(200).json(message);
 };
 
-// Get order details (admin)
+// Get order details (waiter)
 const getOrderDetailHandler = async (req, res) => {
   const orderId = req.params.id;
 
@@ -102,9 +119,9 @@ const getOrderDetailHandler = async (req, res) => {
   });
 
   const orderItems = orderDetail.map(({
-    menuId, menuPrice, amount, subtotal,
+    menuId, menuName, menuPrice, amount, subtotal,
   }) => ({
-    menuId, menuPrice, amount, subtotal,
+    menuId, menuName, menuPrice, amount, subtotal,
   }));
 
   const resp = {
@@ -119,7 +136,7 @@ const getOrderDetailHandler = async (req, res) => {
   res.status(200).json(resp);
 };
 
-// Update order status (admin)
+// Update order status (waiter)
 const updateOrderStatusHandler = async (req, res) => {
   const schema = {
     status: {

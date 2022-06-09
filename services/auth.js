@@ -68,7 +68,7 @@ const loginHandler = async (req, res) => {
     userId: userWithEmail.id,
     email: userWithEmail.email,
     name: userWithEmail.name,
-    isAdmin: userWithEmail.isAdmin,
+    role: userWithEmail.role,
   });
 
   const resp = {};
@@ -77,7 +77,7 @@ const loginHandler = async (req, res) => {
     userId: userWithEmail.id,
     name: userWithEmail.name,
     email: userWithEmail.email,
-    isAdmin: userWithEmail.isAdmin,
+    role: userWithEmail.role,
     token,
   };
 

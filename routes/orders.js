@@ -7,21 +7,21 @@ const {
 const router = express.Router();
 
 /**
- * USER FUNCTIONALITY
+ * CUSTOMER FUNCTIONALITY
  */
 // Post an order
-router.post('/new', jwtAuthenticate(false), addOrderHandler);
+router.post('/new', jwtAuthenticate('CUSTOMER'), addOrderHandler);
 
 /**
- * ADMIN FUNCTIONALITY
+ * WAITER FUNCTIONALITY
  */
 // Get all orders
-router.get('/', jwtAuthenticate(true), getAllOrdersHandler);
+router.get('/', jwtAuthenticate('WAITER'), getAllOrdersHandler);
 
 // Get order details
-router.get('/:id', jwtAuthenticate(true), getOrderDetailHandler);
+router.get('/:id', jwtAuthenticate('WAITER'), getOrderDetailHandler);
 
 // Update order status
-router.patch('/:id', jwtAuthenticate(true), updateOrderStatusHandler);
+router.patch('/:id', jwtAuthenticate('WAITER'), updateOrderStatusHandler);
 
 module.exports = router;

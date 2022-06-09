@@ -19,10 +19,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      isAdmin: {
+      role: {
         allowNull: false,
-        defaultValue: false,
-        type: Sequelize.BOOLEAN,
+        defaultValue: 'CUSTOMER',
+        type: Sequelize.STRING(8),
       },
       createdAt: {
         allowNull: false,

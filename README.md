@@ -1,8 +1,9 @@
 # NoQ-API
+API Documentation: https://documenter.getpostman.com/view/21272217/Uz5JGvK4
 
 ## Setup
-Node v18.0.0
-Npm 8.6.0
+Node v18
+Npm 8
 
 1. Clone repository and cd to the repository
 2. Do ```npm install```
@@ -17,5 +18,4 @@ Do ```npm run devstart``` to start the server
 - ```./mysql```         : connect to mysql database from the terminal (linux only)
 
 ## To do lists
-- [ ] Change isAdmin (0, 1) to status (USER, ADMIN, ROOT) (Users)  
-- [ ] Add menuName column (OrdersMenus)
+- [ ] recommendation system API

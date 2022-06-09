@@ -9,6 +9,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.UUID,
       },
+      menuName: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       menuPrice: {
         allowNull: false,
         type: Sequelize.DOUBLE,
