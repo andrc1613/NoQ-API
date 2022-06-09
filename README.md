@@ -19,3 +19,8 @@ Do ```npm run devstart``` to start the server
 
 ## To do lists
 - [ ] recommendation system API
+- [ ] history API
+- [ ] remove temporary isAdmin
+- [ ] remove temporary nonexpiring token
+- [ ] auto refresh token
+- [ ] expired token handler

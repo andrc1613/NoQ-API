@@ -9,7 +9,7 @@ const { User } = require('../models');
 const success = require('../responses/success');
 const fail = require('../responses/fail');
 
-const generateToken = (payload) => (jwt.sign(payload, secret, { expiresIn }));
+const generateToken = (payload) => (jwt.sign(payload, secret));
 
 const v = new Validator();
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const jwtAuthenticate = require('../middleware/jwt');
 const {
-  addOrderHandler, getAllOrdersHandler, getOrderDetailHandler, updateOrderStatusHandler,
+  addOrderHandler, getOrderHistoryHandler, getAllOrdersHandler, getOrderDetailHandler, updateOrderStatusHandler,
 } = require('../services/orders');
 
 const router = express.Router();
@@ -11,6 +11,9 @@ const router = express.Router();
  */
 // Post an order
 router.post('/new', jwtAuthenticate('CUSTOMER'), addOrderHandler);
+
+// Get order history
+router.get('/history', jwtAuthenticate('CUSTOMER'), getOrderHistoryHandler);
 
 /**
  * WAITER FUNCTIONALITY

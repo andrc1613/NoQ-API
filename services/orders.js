@@ -84,6 +84,11 @@ const addOrderHandler = async (req, res) => {
   }
 };
 
+// Get order history (customer)
+const getOrderHistoryHandler = (req, res) => {
+
+};
+
 // Get all orders (waiter)
 const getAllOrdersHandler = async (req, res) => {
   const orders = await Order.findAndCountAll();
@@ -170,5 +175,9 @@ const updateOrderStatusHandler = async (req, res) => {
 };
 
 module.exports = {
-  addOrderHandler, getAllOrdersHandler, getOrderDetailHandler, updateOrderStatusHandler,
+  addOrderHandler,
+  getOrderHistoryHandler,
+  getAllOrdersHandler,
+  getOrderDetailHandler,
+  updateOrderStatusHandler,
 };
