@@ -33,6 +33,7 @@ const getMenuRecommendationHandler = async (req, res) => {
     order: [
       [sequelize.fn('SUM', sequelize.col('amount')), 'DESC'],
     ],
+    limit: 3,
   });
 
   const menuIds = recMenuIds.map(({ menuId }) => (menuId));
