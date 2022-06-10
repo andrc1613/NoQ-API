@@ -18,7 +18,7 @@ const jwtAuthenticate = (role) => (req, res, next) => {
     req.decoded = decoded;
   });
 
-  if (req.decoded.role !== role) return res.status(403).json(status[403]);
+  if (!role.includes(req.decoded.role)) return res.status(403).json(status[403]);
   next();
 };
 

@@ -9,7 +9,7 @@ const success = require('../responses/success');
 
 const v = new Validator();
 
-// Post an order (customer)
+// Post an order (CUSTOMER)
 const addOrderHandler = async (req, res) => {
   const schema = {
     tableId: 'string',
@@ -84,14 +84,37 @@ const addOrderHandler = async (req, res) => {
   }
 };
 
-// Get order history (customer)
-const getOrderHistoryHandler = (req, res) => {
+// Get order history (CUSTOMER)
+const getOrderHistoryHandler = async (req, res) => {
+  const { userId } = req.decoded;
+  const orders = await Order.findAndCountAll({
+    where: {
+      userId,
+    },
+    order: [
+      ['createdAt', 'DESC'],
+    ],
+  });
+  const datas = (orders.rows).map(({
+    id: orderId, tableId, totalPrice, status,
+  }) => ({
+    orderId, tableId, totalPrice, status,
+  }));
 
+  const message = {
+    total: orders.count,
+    data: datas,
+  };
+  res.status(200).json(message);
 };
 
-// Get all orders (waiter)
+// Get all orders (WAITER)
 const getAllOrdersHandler = async (req, res) => {
-  const orders = await Order.findAndCountAll();
+  const orders = await Order.findAndCountAll({
+    order: [
+      ['createdAt', 'DESC'],
+    ],
+  });
   const datas = (orders.rows).map(({
     id: orderId, userId, tableId, totalPrice, status,
   }) => ({
@@ -105,14 +128,19 @@ const getAllOrdersHandler = async (req, res) => {
   res.status(200).json(message);
 };
 
-// Get order details (waiter)
+// Get order details (CUSTOMER, WAITER)
 const getOrderDetailHandler = async (req, res) => {
   const orderId = req.params.id;
 
+  const { userId, role } = req.decoded;
+
+  const where = {
+    id: orderId,
+  };
+  if (role === 'CUSTOMER') where.userId = userId;
+
   const order = await Order.findOne({
-    where: {
-      id: orderId,
-    },
+    where,
   });
 
   if (!order) return res.status(400).json(fail.notAValidOrderId);
@@ -141,7 +169,7 @@ const getOrderDetailHandler = async (req, res) => {
   res.status(200).json(resp);
 };
 
-// Update order status (waiter)
+// Update order status (WAITER)
 const updateOrderStatusHandler = async (req, res) => {
   const schema = {
     status: {

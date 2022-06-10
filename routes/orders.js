@@ -6,25 +6,19 @@ const {
 
 const router = express.Router();
 
-/**
- * CUSTOMER FUNCTIONALITY
- */
-// Post an order
-router.post('/new', jwtAuthenticate('CUSTOMER'), addOrderHandler);
+// Post an order (CUSTOMER)
+router.post('/new', jwtAuthenticate(['CUSTOMER']), addOrderHandler);
 
-// Get order history
-router.get('/history', jwtAuthenticate('CUSTOMER'), getOrderHistoryHandler);
+// Get order history (CUSTOMER)
+router.get('/history', jwtAuthenticate(['CUSTOMER']), getOrderHistoryHandler);
 
-/**
- * WAITER FUNCTIONALITY
- */
-// Get all orders
-router.get('/', jwtAuthenticate('WAITER'), getAllOrdersHandler);
+// Get all orders (WAITER)
+router.get('/', jwtAuthenticate(['WAITER']), getAllOrdersHandler);
 
-// Get order details
-router.get('/:id', jwtAuthenticate('WAITER'), getOrderDetailHandler);
+// Get order details (CUSTOMER ,WAITER)
+router.get('/:id', jwtAuthenticate(['CUSTOMER', 'WAITER']), getOrderDetailHandler);
 
-// Update order status
-router.patch('/:id', jwtAuthenticate('WAITER'), updateOrderStatusHandler);
+// Update order status (WAITER)
+router.patch('/:id', jwtAuthenticate(['WAITER']), updateOrderStatusHandler);
 
 module.exports = router;
